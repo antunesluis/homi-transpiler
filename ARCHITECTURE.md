@@ -131,7 +131,7 @@ class TriggerMovimentoNode:
 class TriggerBateriaNode:
     entity_id: str
     operador: str     # "abaixo" | "acima"
-    valor: float
+    valor: str        # lexema original: "20%" ou "30"
     line: int
 
 @dataclass

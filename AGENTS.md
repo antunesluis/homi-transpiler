@@ -49,7 +49,7 @@ tests/
 - Classes de erro: `LexError(message, line)`, `ParseError(message, line, token)`, `SemanticError(message, line)`
 - Nós da AST: classes com sufixo `Node` (ex: `AutomacaoNode`, `TriggerNode`)
 - Tokens: constantes `UPPER_SNAKE_CASE` (ex: `KW_QUANDO`, `ENTITY_ID`)
-- Visitors do codegen: métodos `visit_<NomeDaClasse>`
+- Visitors do codegen: métodos `_generate_<tipo>` (ex: `_generate_trigger`, `_generate_condition`)
 - Cada classe/função pública com docstring — código será avaliado por professor
 
 ## Validações Semânticas Obrigatórias

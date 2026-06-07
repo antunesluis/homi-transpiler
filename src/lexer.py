@@ -68,9 +68,6 @@ _KEYWORDS: dict[str, str] = {
     'bateria':   'KW_BATERIA',
     'abaixo':    'KW_ABAIXO',
     'acima':     'KW_ACIMA',
-    'de':        'KW_DE',
-    'e':         'KW_E',
-    'ou':        'KW_OU',
 }
 
 
@@ -130,9 +127,13 @@ def tokenize(source: str) -> list[Token]:
             start = i
             i += 1  # pula aspa de abertura
             while i < n and source[i] != '"':
-                if source[i] == '\n':
+                if source[i] == '\\' and i + 1 < n:
+                    i += 2  # pula escape + caractere escapado
+                elif source[i] == '\n':
                     line += 1
-                i += 1
+                    i += 1
+                else:
+                    i += 1
             if i >= n:
                 raise LexError("string não fechada", start_line)
             i += 1  # pula aspa de fechamento

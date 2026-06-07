@@ -198,22 +198,19 @@ class Parser:
         token = self._peek()
         self.errors.append(ParseError(message, token.line, token))
 
-    def _peek_ahead(self, offset: int) -> Token:
-        """Espia um token à frente (0 = atual). Não ultrapassa EOF."""
-        idx = min(self._pos + offset, len(self._tokens) - 1)
-        return self._tokens[idx]
-
     def _sync(self):
         """
         Modo pânico: descarta tokens até encontrar um ponto de sincronização
-        (SEMICOLON, RBRACE ou EOF). Para no token de sincronização,
-        não o consome — o chamador decide o que fazer com ele.
+        (SEMICOLON, RBRACE ou EOF). Consome SEMICOLON e RBRACE para
+        permitir progresso do parser; EOF é apenas parada sem consumo.
         """
         while True:
             token = self._peek()
-            if token.type in ('SEMICOLON', 'RBRACE', 'EOF'):
+            if token.type in ('SEMICOLON', 'RBRACE'):
+                self._advance()  # consome para que o chamador não trave
                 break
-            # pula o token inválido (avisa apenas o primeiro)
+            if token.type == 'EOF':
+                break
             self._pos += 1
 
     def _optional_semicolon(self):
@@ -236,13 +233,13 @@ class Parser:
             if automacao is not None:
                 automacoes.append(automacao)
 
-        # Erro se sobraram tokens não processados
-        if not self._check('EOF') and not self.errors:
+        # Erro se sobraram tokens não processados após todas automações
+        if not self._check('EOF'):
+            self._error(f"token inesperado '{self._peek().value}'")
+            self._sync()
+            # descarta o que sobrou após o ponto de sincronização
             while not self._check('EOF'):
-                self._error(f"token inesperado '{self._peek().value}'")
-                self._sync()
-                if self._check('EOF'):
-                    break
+                self._pos += 1
 
         return ProgramNode(automacoes=automacoes)
 
@@ -367,14 +364,14 @@ class Parser:
                 )
 
             # trigger_movimento: entity movimento
-            if self._check('KW_MOVIMENTO'):
+            elif self._check('KW_MOVIMENTO'):
                 self._advance()
                 return TriggerMovimentoNode(
                     entity_id=entity_id, line=line,
                 )
 
             # trigger_bateria: entity bateria abaixo/acima valor
-            if self._check('KW_BATERIA'):
+            elif self._check('KW_BATERIA'):
                 self._advance()
                 if not self._check('KW_ABAIXO', 'KW_ACIMA'):
                     self._error(
@@ -518,6 +515,8 @@ class Parser:
         self._advance()  # 'entao'
 
         if self._match('LBRACE') is None:
+            # tenta sincronizar para reduzir cascata de erros
+            self._sync()
             return actions
 
         while self._check(*self._ACTION_FIRST):

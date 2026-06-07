@@ -89,9 +89,6 @@ def test_symbols():
     ('bateria',   'KW_BATERIA'),
     ('abaixo',    'KW_ABAIXO'),
     ('acima',     'KW_ACIMA'),
-    ('de',        'KW_DE'),
-    ('e',         'KW_E'),
-    ('ou',        'KW_OU'),
 ])
 def test_keywords(source, expected_type):
     tokens = tokenize(source)
@@ -434,3 +431,17 @@ automacao "Tablet - carregador" {
     assert 'PERCENT' in types
     assert 'KW_NOTIFICAR' in types
     assert 'STRING' in types
+
+
+# ── String com escape ─────────────────────────────────────────────
+
+def test_string_with_backslash_escape():
+    """Strings com \\\" são reconhecidas como um único token."""
+    tokens = tokenize(r'"hello \"world\""')
+    assert _types(tokens) == ['STRING']
+    assert '\\' in tokens[0].value  # escape preservado no lexema
+
+
+def test_string_with_multiple_escapes():
+    tokens = tokenize(r'"a\\b\"c"')
+    assert _types(tokens) == ['STRING']

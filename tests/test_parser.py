@@ -671,3 +671,29 @@ def test_semicolons_optional():
         }
     '''
     assert _count_errors(src) == 0
+
+
+# ── Tokens residuais após automação ──────────────────────────────
+
+def test_leftover_tokens_after_automacao():
+    """Tokens após o último } devem gerar erros, não travar."""
+    _, p = _parse('''
+        automacao "test" {
+            quando hora = 10:00
+            entao { ligar luz.sala }
+        }
+        garbage;
+    ''')
+    assert len(p.errors) >= 1
+
+
+def test_leftover_tokens_with_brace():
+    """Tokens com } extra após automação devem gerar erro."""
+    _, p = _parse('''
+        automacao "test" {
+            quando hora = 10:00
+            entao { ligar luz.sala }
+        }
+        }
+    ''')
+    assert len(p.errors) >= 1

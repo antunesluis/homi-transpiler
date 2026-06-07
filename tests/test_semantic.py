@@ -429,3 +429,41 @@ def test_alarm_control_panel_desarmado_valid():
         }
     '''
     assert _error_count(src2) == 0
+
+
+# ── alarm_control_panel em ação ligar/desligar → erro ───────────
+
+def test_ligar_alarm_control_panel_error():
+    src = '''
+        automacao "test" {
+            quando hora = 10:00
+            entao { ligar alarm_control_panel.alarmo }
+        }
+    '''
+    assert _error_count(src) == 1
+    msg = _error_messages(src)[0]
+    assert 'alarm_control_panel' in msg
+
+
+# ── media_player em trigger estado → sem erro ───────────────────
+
+def test_media_player_trigger_estado_valid():
+    src = '''
+        automacao "test" {
+            quando media_player.som muda para ligado
+            entao { ligar media_player.som }
+        }
+    '''
+    assert _error_count(src) == 0
+
+
+# ── switch em trigger estado → sem erro ─────────────────────────
+
+def test_switch_trigger_estado_valid():
+    src = '''
+        automacao "test" {
+            quando switch.tv muda para ligado
+            entao { desligar switch.tv }
+        }
+    '''
+    assert _error_count(src) == 0

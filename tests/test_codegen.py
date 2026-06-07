@@ -581,3 +581,15 @@ def test_output_is_roundtrippable():
     parsed = yaml.safe_load(raw)
     assert isinstance(parsed, list)
     assert len(parsed) == 1
+
+
+# ── CLOCK_TIME com single-digit seconds ──────────────────────────
+
+def test_clock_time_single_digit_seconds():
+    a = _first('''
+        automacao "test" {
+            quando hora = 5:00:00
+            entao { ligar luz.sala }
+        }
+    ''')
+    assert a['triggers'][0]['at'] == '05:00:00'

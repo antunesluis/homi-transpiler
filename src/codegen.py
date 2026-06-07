@@ -209,15 +209,20 @@ class CodeGenerator:
             esperar 2h → delay: { hours: 2 }
         """
         delay: dict[str, Any] = {}
-        if duration.endswith('s'):
-            delay['seconds'] = int(duration[:-1])
-        elif duration.endswith('min'):
-            delay['minutes'] = int(duration[:-3])
-        elif duration.endswith('m'):
-            # sufixo 'm' isolado → minutos (ex: '10m')
-            delay['minutes'] = int(duration[:-1])
-        elif duration.endswith('h'):
-            delay['hours'] = int(duration[:-1])
+        try:
+            if duration.endswith('s'):
+                delay['seconds'] = int(duration[:-1])
+            elif duration.endswith('min'):
+                delay['minutes'] = int(duration[:-3])
+            elif duration.endswith('m'):
+                delay['minutes'] = int(duration[:-1])
+            elif duration.endswith('h'):
+                delay['hours'] = int(duration[:-1])
+        except (ValueError, IndexError):
+            raise ValueError(
+                f"duração inválida '{duration}': "
+                f"formato esperado: Ns, Nmin, Nm ou Nh"
+            ) from None
         return {'delay': delay}
 
     def _generate_action_se(self, node: ActionSeNode) -> dict[str, Any]:
@@ -271,11 +276,15 @@ def _normalize_clock_time(time_str: str) -> str:
         hh = parts[0].zfill(2)
         mm = parts[1].zfill(2)
         return f'{hh}:{mm}:00'
-    # HH:MM:SS → deve ter 3 partes, normalizar padding
-    hh = parts[0].zfill(2)
-    mm = parts[1].zfill(2)
-    ss = parts[2].zfill(2)
-    return f'{hh}:{mm}:{ss}'
+    if len(parts) == 3:
+        hh = parts[0].zfill(2)
+        mm = parts[1].zfill(2)
+        ss = parts[2].zfill(2)
+        return f'{hh}:{mm}:{ss}'
+    raise ValueError(
+        f"formato de horário inválido: '{time_str}' "
+        f"(esperado: HH:MM ou HH:MM:SS)"
+    )
 
 
 def _parse_numeric_value(value: str) -> int | float:
