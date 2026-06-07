@@ -1,0 +1,8 @@
+# Controla carregamento do tablet pela bateria
+automacao "Tablet - carregador" {
+    quando sensor.bateria_tablet bateria abaixo 20%
+    entao {
+        ligar switch.carregador_tablet
+        notificar "Tablet carregando"
+    }
+}

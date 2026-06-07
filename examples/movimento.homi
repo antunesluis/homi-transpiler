@@ -1,0 +1,11 @@
+# Liga luz do corredor ao detectar movimento
+automacao "Corredor - movimento" {
+    quando binary_sensor.corredor_suite muda para ligado
+    se alarm_control_panel.alarmo esta desarmado
+    se luz.corda_led_corredor esta desligado
+    entao {
+        ligar luz.corda_led_corredor
+        esperar 45s
+        desligar luz.corda_led_corredor
+    }
+}
