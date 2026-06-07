@@ -473,7 +473,7 @@ def test_action_se_time_condition():
 # ══════════════════════════════════════════════════════════════════════
 
 def test_movimento_example_parses():
-    src = (Path(__file__).parent.parent / 'examples' / 'movimento.homi').read_text()
+    src = (Path(__file__).parent.parent / 'examples' / 'valid/movimento.homi').read_text()
     result = _generate(src)
     assert len(result) == 1
     a = result[0]
@@ -484,7 +484,7 @@ def test_movimento_example_parses():
 
 
 def test_horario_example_parses():
-    src = (Path(__file__).parent.parent / 'examples' / 'horario.homi').read_text()
+    src = (Path(__file__).parent.parent / 'examples' / 'valid/horario.homi').read_text()
     result = _generate(src)
     a = result[0]
     assert a['triggers'][0]['trigger'] == 'time'
@@ -492,7 +492,7 @@ def test_horario_example_parses():
 
 
 def test_bateria_example_parses():
-    src = (Path(__file__).parent.parent / 'examples' / 'bateria.homi').read_text()
+    src = (Path(__file__).parent.parent / 'examples' / 'valid/bateria.homi').read_text()
     result = _generate(src)
     a = result[0]
     assert a['triggers'][0]['trigger'] == 'numeric_state'

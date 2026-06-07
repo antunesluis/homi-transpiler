@@ -65,17 +65,17 @@ def test_symbol_table_multiple_entities():
 # ── Scripts válidos (sem erros) ────────────────────────────────────
 
 def test_movimento_example_no_semantic_errors():
-    src = (Path(__file__).parent.parent / 'examples' / 'movimento.homi').read_text()
+    src = (Path(__file__).parent.parent / 'examples' / 'valid/movimento.homi').read_text()
     assert _error_count(src) == 0
 
 
 def test_horario_example_no_semantic_errors():
-    src = (Path(__file__).parent.parent / 'examples' / 'horario.homi').read_text()
+    src = (Path(__file__).parent.parent / 'examples' / 'valid/horario.homi').read_text()
     assert _error_count(src) == 0
 
 
 def test_bateria_example_no_semantic_errors():
-    src = (Path(__file__).parent.parent / 'examples' / 'bateria.homi').read_text()
+    src = (Path(__file__).parent.parent / 'examples' / 'valid/bateria.homi').read_text()
     assert _error_count(src) == 0
 
 

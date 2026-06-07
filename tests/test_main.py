@@ -10,7 +10,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
 
 from main import compile_homi
 
-_EXAMPLES = Path(__file__).parent.parent / 'examples'
+_EXAMPLES = Path(__file__).parent.parent / 'examples' / 'valid'
 _MAIN = Path(__file__).parent.parent / 'src' / 'main.py'
 _PYTHON = Path(sys.executable)
 

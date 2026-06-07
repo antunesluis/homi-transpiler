@@ -488,17 +488,17 @@ def test_automacao_nome_quotes_stripped():
 # ── Sem erros nos scripts de exemplo ────────────────────────────────
 
 def test_movimento_example_no_errors():
-    src = (Path(__file__).parent.parent / 'examples' / 'movimento.homi').read_text()
+    src = (Path(__file__).parent.parent / 'examples' / 'valid/movimento.homi').read_text()
     assert _count_errors(src) == 0
 
 
 def test_horario_example_no_errors():
-    src = (Path(__file__).parent.parent / 'examples' / 'horario.homi').read_text()
+    src = (Path(__file__).parent.parent / 'examples' / 'valid/horario.homi').read_text()
     assert _count_errors(src) == 0
 
 
 def test_bateria_example_no_errors():
-    src = (Path(__file__).parent.parent / 'examples' / 'bateria.homi').read_text()
+    src = (Path(__file__).parent.parent / 'examples' / 'valid/bateria.homi').read_text()
     assert _count_errors(src) == 0
 
 
@@ -506,7 +506,7 @@ def test_bateria_example_no_errors():
 
 def test_movimento_ast_fields():
     a = _first_automacao(
-        (Path(__file__).parent.parent / 'examples' / 'movimento.homi').read_text()
+        (Path(__file__).parent.parent / 'examples' / 'valid/movimento.homi').read_text()
     )
     assert isinstance(a.triggers[0], TriggerEstadoNode)
     assert a.triggers[0].entity_id == 'binary_sensor.corredor_suite'
@@ -532,7 +532,7 @@ def test_movimento_ast_fields():
 
 def test_horario_ast_fields():
     a = _first_automacao(
-        (Path(__file__).parent.parent / 'examples' / 'horario.homi').read_text()
+        (Path(__file__).parent.parent / 'examples' / 'valid/horario.homi').read_text()
     )
     assert isinstance(a.triggers[0], TriggerHoraNode)
     assert a.triggers[0].clock_time == '05:00'
@@ -540,7 +540,7 @@ def test_horario_ast_fields():
 
 def test_bateria_ast_fields():
     a = _first_automacao(
-        (Path(__file__).parent.parent / 'examples' / 'bateria.homi').read_text()
+        (Path(__file__).parent.parent / 'examples' / 'valid/bateria.homi').read_text()
     )
     assert isinstance(a.triggers[0], TriggerBateriaNode)
     assert a.triggers[0].entity_id == 'sensor.bateria_tablet'

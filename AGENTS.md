@@ -9,16 +9,16 @@ Escrito em Python puro (sem PLY, ANTLR, ou bibliotecas de parsing — requisito 
 Fases: Léxica (lexer.py) → Sintática LL(1) (parser.py) → Semântica (semantic.py) → Codegen YAML (codegen.py).
 
 Documentação de referência:
-- `SPEC.md` — gramática, tokens, exemplos
-- `ARCHITECTURE.md` — fluxo de compilação, interfaces dos módulos
+- `docs/SPEC.md` — gramática, tokens, exemplos
+- `docs/ARCHITECTURE.md` — fluxo de compilação, interfaces dos módulos
 - `automations_homi.yaml` — automações HA reais para basear o mapeamento Homi→YAML
 
 ## Comandos
 
 ```bash
-make run           # compila examples/movimento.homi e imprime YAML
+make run           # compila examples/valid/movimento.homi e imprime YAML
 make test          # roda pytest tests/ -v
-python src/main.py examples/movimento.homi --output saida.yaml   # salva em arquivo
+python src/main.py examples/valid/movimento.homi --output saida.yaml   # salva em arquivo
 ```
 
 ## Restrições Técnicas
@@ -37,6 +37,7 @@ python src/main.py examples/movimento.homi --output saida.yaml   # salva em arqu
 src/
   main.py       — entry point: lê .homi, orquestra fases, imprime YAML ou erros
   lexer.py      — tokenize(source) → list[Token(type, value, line)]; DFA manual
+  nodes.py      — dataclasses da AST: ProgramNode, TriggerNode, ActionNode, etc.
   parser.py     — Parser(tokens).parse() → ProgramNode; descendente recursivo LL(1)
   semantic.py   — SemanticAnalyzer(ast).analyze(); tabela de símbolos + validação de tipos
   codegen.py    — CodeGenerator(ast).generate() → string YAML
@@ -73,9 +74,9 @@ tests/
 
 ## Fluxo para Adicionar Nova Construção
 
-1. Adicionar token em SPEC.md
+1. Adicionar token em docs/SPEC.md
 2. Implementar reconhecimento em `lexer.py`
-3. Adicionar produção em SPEC.md (Gramática)
+3. Adicionar produção em docs/SPEC.md (Gramática)
 4. Implementar parsing em `parser.py` e retornar nó AST correto
 5. Validação semântica em `semantic.py` se necessário
 6. Emissão YAML em `codegen.py`
