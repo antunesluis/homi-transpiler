@@ -1,0 +1,6 @@
+# ERRO SINTÁTICO: automação sem bloco entao {} na linha 5
+# O compilador deve reportar erro sintático em modo pânico e não gerar YAML
+automacao "Teste - erro sintatico" {
+    quando binary_sensor.corredor movimento
+    se alarm_control_panel.alarmo esta desarmado
+}

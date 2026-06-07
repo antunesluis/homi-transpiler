@@ -1,0 +1,19 @@
+# Demonstra: múltiplas automações no mesmo arquivo, TriggerHora distintas
+# Duas automações independentes: acende de manhã, apaga à noite
+automacao "Manha - acender luzes" {
+    quando hora = 06:30
+    entao {
+        ligar luz.sala_led
+        ligar luz.cozinha_led
+    }
+}
+
+automacao "Noite - apagar luzes" {
+    quando hora = 23:00
+    se alarm_control_panel.alarmo esta desarmado
+    entao {
+        desligar luz.sala_led
+        desligar luz.cozinha_led
+        desligar switch.luzes_do_lavabo
+    }
+}

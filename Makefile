@@ -1,7 +1,7 @@
 .PHONY: run test clean
 
 run:
-	python src/main.py examples/movimento.homi
+	python src/main.py examples/valid/movimento.homi
 
 test:
 	python -m pytest tests/ -v

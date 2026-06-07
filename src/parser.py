@@ -10,123 +10,24 @@ Interface:
     Parser.errors → list[ParseError] (erros coletados, nunca aborta)
 """
 
-from dataclasses import dataclass, field
 from lexer import Token
-
-
-# ══════════════════════════════════════════════════════════════════════
-# Nós da AST
-# ══════════════════════════════════════════════════════════════════════
-
-@dataclass
-class ProgramNode:
-    """Raiz da AST. Contém uma lista de automações."""
-    automacoes: list['AutomacaoNode'] = field(default_factory=list)
-
-
-@dataclass
-class AutomacaoNode:
-    """Representa uma automação completa."""
-    nome: str
-    triggers: list = field(default_factory=list)
-    conditions: list = field(default_factory=list)
-    actions: list = field(default_factory=list)
-    line: int = 0
-
-
-@dataclass
-class TriggerEstadoNode:
-    """Trigger: entity muda para estado."""
-    entity_id: str
-    estado: str
-    line: int = 0
-
-
-@dataclass
-class TriggerHoraNode:
-    """Trigger: hora = HH:MM."""
-    clock_time: str
-    line: int = 0
-
-
-@dataclass
-class TriggerMovimentoNode:
-    """Trigger: entity movimento."""
-    entity_id: str
-    line: int = 0
-
-
-@dataclass
-class TriggerBateriaNode:
-    """Trigger: entity bateria abaixo/acima N%."""
-    entity_id: str
-    operador: str
-    valor: str
-    line: int = 0
-
-
-@dataclass
-class ConditionEstadoNode:
-    """Condição: entity esta estado."""
-    entity_id: str
-    estado: str
-    line: int = 0
-
-
-@dataclass
-class ConditionHoraNode:
-    """Condição: hora abaixo/acima HH:MM."""
-    operador: str
-    clock_time: str
-    line: int = 0
-
-
-@dataclass
-class ActionLigarNode:
-    """Ação: ligar entity."""
-    entity_id: str
-    line: int = 0
-
-
-@dataclass
-class ActionDesligarNode:
-    """Ação: desligar entity."""
-    entity_id: str
-    line: int = 0
-
-
-@dataclass
-class ActionEsperarNode:
-    """Ação: esperar duration."""
-    duration: str
-    line: int = 0
-
-
-@dataclass
-class ActionNotificarNode:
-    """Ação: notificar mensagem."""
-    message: str
-    line: int = 0
-
-
-@dataclass
-class ActionSeNode:
-    """Ação condicional: se cond então { ... } [senão { ... }]."""
-    condition: 'ConditionNode'
-    then_actions: list = field(default_factory=list)
-    else_actions: list = field(default_factory=list)
-    line: int = 0
-
-
-# Union type alias para facilitar uso externo
-ConditionNode = ConditionEstadoNode | ConditionHoraNode
-TriggerNode = (
-    TriggerEstadoNode | TriggerHoraNode
-    | TriggerMovimentoNode | TriggerBateriaNode
-)
-ActionNode = (
-    ActionLigarNode | ActionDesligarNode | ActionEsperarNode
-    | ActionNotificarNode | ActionSeNode
+from nodes import (
+    ProgramNode,
+    AutomacaoNode,
+    TriggerEstadoNode,
+    TriggerHoraNode,
+    TriggerMovimentoNode,
+    TriggerBateriaNode,
+    ConditionEstadoNode,
+    ConditionHoraNode,
+    ActionLigarNode,
+    ActionDesligarNode,
+    ActionEsperarNode,
+    ActionNotificarNode,
+    ActionSeNode,
+    ConditionNode,
+    TriggerNode,
+    ActionNode,
 )
 
 

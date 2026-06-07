@@ -11,7 +11,7 @@ Também preenche a tabela de símbolos (entity_id → domínio).
 Todos os erros são coletados em self.errors — nunca aborta.
 """
 
-from parser import (
+from nodes import (
     ProgramNode,
     AutomacaoNode,
     TriggerEstadoNode,

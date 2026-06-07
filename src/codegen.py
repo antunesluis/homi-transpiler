@@ -8,12 +8,11 @@ Interface:
     CodeGenerator(ast).generate() → str (YAML)
 """
 
-from dataclasses import dataclass
 from typing import Any
 
 import yaml
 
-from parser import (
+from nodes import (
     ProgramNode,
     AutomacaoNode,
     TriggerEstadoNode,

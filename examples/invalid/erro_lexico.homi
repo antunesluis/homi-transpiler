@@ -1,0 +1,8 @@
+# ERRO LÉXICO: caractere inválido '@' na linha 4
+# O compilador deve reportar erro léxico e não gerar YAML
+automacao "Teste - erro lexico" {
+    quando hora = 10:00
+    @ entao {
+        ligar luz.sala
+    }
+}

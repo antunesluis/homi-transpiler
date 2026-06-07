@@ -1,4 +1,5 @@
-# Controla carregamento do tablet pela bateria
+# Demonstra: TriggerBateria (bateria abaixo N%), ActionNotificar, PERCENT
+# Liga carregador do tablet quando bateria fica abaixo de 20%
 automacao "Tablet - carregador" {
     quando sensor.bateria_tablet bateria abaixo 20%
     entao {

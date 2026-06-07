@@ -1,0 +1,15 @@
+# Demonstra: ActionSe com senao, condição de hora, ação notificar
+# À noite acende luz fraca, de dia acende luz forte
+automacao "Sala - iluminacao inteligente" {
+    quando binary_sensor.sala_motion movimento
+    se alarm_control_panel.alarmo esta desarmado
+    entao {
+        se hora abaixo 18:00 entao {
+            ligar luz.sala_led
+            ligar media_player.music_frame
+        } senao {
+            ligar luz.arandela_suite
+            notificar "Luz noturna da sala acesa"
+        }
+    }
+}

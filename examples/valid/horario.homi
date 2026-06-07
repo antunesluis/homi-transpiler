@@ -1,4 +1,5 @@
-# Desliga tudo na sala por horário
+# Demonstra: TriggerHora (hora = HH:MM), ActionDesligar com domínio switch
+# Desliga todas as luzes da sala em um horário fixo
 automacao "Sala - desligar tudo" {
     quando hora = 05:00
     entao {

@@ -1,0 +1,15 @@
+# Demonstra: múltiplos triggers distintos (TriggerHora + TriggerMovimento + TriggerEstado)
+#           e múltiplas conditions (ConditionEstado + ConditionHora)
+# Acende luz do corredor ao detectar movimento, apenas em horário noturno
+automacao "Corredor - movimento noturno" {
+    quando hora = 18:00
+    quando binary_sensor.corredor_suite movimento
+    quando sensor.luminosidade muda para "noite"
+    se alarm_control_panel.alarmo esta desarmado
+    se hora abaixo 23:00
+    entao {
+        ligar luz.corda_led_corredor
+        esperar 2min
+        desligar luz.corda_led_corredor
+    }
+}

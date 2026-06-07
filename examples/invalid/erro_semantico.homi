@@ -1,0 +1,12 @@
+# ERRO SEMÂNTICO DUPLO:
+#   Linha 8: estado 'armado' em luz.* (armado só é válido para alarm_control_panel)
+#   Linha 10: tentar ligar sensor.* (domínio sensor não suporta ligar)
+# O compilador deve gerar YAML (com avisos) e reportar ambos os erros sem abortar
+automacao "Teste - erro semantico" {
+    quando hora = 10:00
+    se luz.sala esta armado
+    entao {
+        ligar sensor.temperatura
+        ligar luz.sala
+    }
+}
