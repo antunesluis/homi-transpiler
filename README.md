@@ -153,7 +153,6 @@ docs/
 - [docs/SPEC.md](docs/SPEC.md) — Especificação da linguagem: GLC, tokens, gramática LL(1)
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — Arquitetura do compilador: interfaces, fluxo, decisões de design
 - [docs/relatorio.md](docs/relatorio.md) — Relatório técnico completo: descrição da GLC, analisador léxico, sintático (com modo pânico), semântico (tabela de símbolos e regras de validação), geração de código YAML e exemplos de entrada/saída
-- [AGENTS.md](AGENTS.md) — Guia para agentes de IA colaborando no projeto
 - [automations_homi.yaml](automations_homi.yaml) — Automações HA reais usadas como referência para o mapeamento Homi→YAML
 
 ## Comandos rápidos
